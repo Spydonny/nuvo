@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --terracotta: #c0492f;
+  --choco: #3a2620;
+  --ivory: #f3ebdd;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Manrope', system-ui, sans-serif;
+  background: var(--choco);
+  color: var(--ivory);
+}
+
+::selection {
+  background: var(--terracotta);
+  color: var(--ivory);
+}
+
+/* Тонкий матовый «бархатный» шум для фонов секций */
+.bg-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Каллиграфический акцент */
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #2a1a15;
+}
+::-webkit-scrollbar-thumb {
+  background: #5c4a4a;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6e5757;
+}
