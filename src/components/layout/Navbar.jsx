@@ -21,9 +21,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Блокируем прокрутку фона, пока открыто мобильное меню.
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-[60] transition-all duration-500 ${
         scrolled
           ? 'bg-choco-deep/85 backdrop-blur-md py-3 shadow-card'
           : 'bg-transparent py-5'
@@ -71,7 +79,7 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-50 bg-choco-deep/95 backdrop-blur-lg md:hidden"
+            className="fixed inset-0 z-50 flex flex-col bg-choco-deep md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -90,7 +98,11 @@ export default function Navbar() {
                   key={l.to}
                   to={l.to}
                   onClick={() => setOpen(false)}
-                  className="font-serif text-3xl text-ivory"
+                  className={({ isActive }) =>
+                    `font-serif text-3xl transition-colors ${
+                      isActive ? 'text-gold' : 'text-ivory'
+                    }`
+                  }
                 >
                   {l.label}
                 </NavLink>

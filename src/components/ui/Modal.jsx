@@ -16,7 +16,7 @@ export default function Modal({ open, onClose, children }) {
             onClick={onClose}
           />
           <motion.div
-            className="relative z-10 w-full max-w-3xl overflow-hidden rounded-3xl bg-choco-light shadow-soft"
+            className="relative z-10 max-h-[90dvh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-choco-light shadow-soft"
             initial={{ scale: 0.92, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 20 }}

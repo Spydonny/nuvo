@@ -107,7 +107,7 @@ export default function AdminLayout() {
           </div>
         </header>
 
-        <motion.main {...pageTransition} className="p-5 lg:p-8">
+        <motion.main {...pageTransition} className="overflow-x-hidden p-5 lg:p-8">
           <Outlet />
         </motion.main>
       </div>

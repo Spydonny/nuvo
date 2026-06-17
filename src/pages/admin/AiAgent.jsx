@@ -38,7 +38,7 @@ export default function AiAgent() {
       <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-gradient-to-br from-wine/50 via-[#241914] to-[#241914] p-8 shadow-soft">
         <Sparkles className="absolute right-6 top-6 text-gold/40" size={48} />
         <p className="text-sm uppercase tracking-[0.3em] text-gold">принёс ИИ-агент</p>
-        <p className="mt-3 font-serif text-5xl font-bold text-ivory md:text-6xl">
+        <p className="mt-3 break-words font-serif text-4xl font-bold leading-tight text-ivory sm:text-5xl md:text-6xl">
           {formatKzt(aiSummary.revenue)}
         </p>
         <p className="mt-2 text-ivory/60">

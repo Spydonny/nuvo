@@ -106,6 +106,7 @@ export default function Integrations() {
       </div>
 
       <Card title="Документы 1С">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-ivory/45">
@@ -126,6 +127,7 @@ export default function Integrations() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
     </div>
   )

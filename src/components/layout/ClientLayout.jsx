@@ -7,7 +7,7 @@ import { pageTransition } from '../ui/Reveal.jsx'
 
 export default function ClientLayout() {
   return (
-    <div className="min-h-screen bg-choco text-ivory">
+    <div className="min-h-screen overflow-x-hidden bg-choco text-ivory">
       <Navbar />
       <motion.main {...pageTransition}>
         <Outlet />
