@@ -186,3 +186,12 @@ export function sendMessage(chatId: string, content: string) {
     body: { content },
   })
 }
+
+// Включить/выключить бота в конкретном чате. Это единственный мьют-переключатель:
+// при bot_enabled=false бот в этом чате молчит (передача оператору его не глушит).
+export function toggleChatBot(chatId: string, botEnabled: boolean) {
+  return request<Chat>(`/chats/${encodeURIComponent(chatId)}/bot`, {
+    method: 'PATCH',
+    body: { bot_enabled: botEnabled },
+  })
+}

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { MessageSquare, Search, Send, ToggleLeft, ToggleRight } from 'lucide-react'
 import Card from '../../components/admin/Card'
 import Button from '../../components/ui/Button'
-import { fetchChats, fetchChat, sendMessage } from '../../lib/api'
+import { fetchChats, fetchChat, sendMessage, toggleChatBot } from '../../lib/api'
 import type { Chat, ChatDetail, ChatStatus, MessageRole } from '../../types'
 
 const statuses: Array<{ id: ChatStatus | 'all'; label: string }> = [
@@ -60,10 +60,21 @@ export default function Chats() {
       .catch(() => setError('Не удалось отправить ответ в outbox.'))
   }
 
-  const toggleBot = (chat: Chat) => {
-    setChats((items) =>
-      items.map((item) => (item.id === chat.id ? { ...item, bot_enabled: !item.bot_enabled } : item)),
-    )
+  const toggleBot = (chat: Chat | ChatDetail) => {
+    toggleChatBot(chat.id, !chat.bot_enabled)
+      .then((updated) => {
+        setChats((items) =>
+          items.map((item) =>
+            item.id === chat.id ? { ...item, bot_enabled: updated.bot_enabled } : item,
+          ),
+        )
+        setSelected((current) =>
+          current && current.id === chat.id
+            ? { ...current, bot_enabled: updated.bot_enabled }
+            : current,
+        )
+      })
+      .catch(() => setError('Не удалось переключить бота.'))
   }
 
   if (loading) return <PageState text="Загружаем чаты..." />
@@ -160,9 +171,12 @@ export default function Chats() {
                   </div>
                   <button
                     onClick={() => toggleBot(selected)}
-                    className="rounded-full bg-ivory/10 px-3 py-1.5 text-xs text-ivory/70"
+                    className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                      selected.bot_enabled ? 'bg-gold/15 text-gold' : 'bg-ivory/10 text-ivory/50'
+                    }`}
                   >
-                    bot_enabled: {selected.bot_enabled ? 'on' : 'off'}
+                    {selected.bot_enabled ? <ToggleRight size={16} /> : <ToggleLeft size={16} />}
+                    {selected.bot_enabled ? 'Бот включён' : 'Бот выключен'}
                   </button>
                 </div>
               </div>
