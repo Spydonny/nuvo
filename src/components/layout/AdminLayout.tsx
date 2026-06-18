@@ -39,7 +39,7 @@ export default function AdminLayout() {
 
   const logout = () => {
     clearToken()
-    navigate('/admin', { replace: true })
+    navigate('/admin/login', { replace: true })
   }
 
   return (

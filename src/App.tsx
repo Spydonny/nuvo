@@ -17,7 +17,7 @@ import Settings from './pages/admin/Settings'
 import { isAuthenticated } from './lib/api'
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
-  return isAuthenticated() ? <>{children}</> : <Navigate to="/admin" replace />
+  return isAuthenticated() ? <>{children}</> : <Navigate to="/admin/login" replace />
 }
 
 export default function App() {
@@ -32,7 +32,14 @@ export default function App() {
           <Route path="/contacts" element={<Contacts />} />
         </Route>
 
-        <Route path="/admin" element={<Login />} />
+        <Route
+          path="/admin"
+          element={<Navigate to={isAuthenticated() ? '/admin/dashboard' : '/admin/login'} replace />}
+        />
+        <Route
+          path="/admin/login"
+          element={isAuthenticated() ? <Navigate to="/admin/dashboard" replace /> : <Login />}
+        />
         <Route
           element={
             <ProtectedRoute>
