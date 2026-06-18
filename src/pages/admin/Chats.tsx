@@ -116,9 +116,9 @@ export default function Chats() {
         </div>
       </Card>
 
-      <div className="grid gap-5 lg:grid-cols-[380px_1fr]">
-        <Card className="h-[72vh] overflow-hidden p-0">
-          <div className="space-y-1 overflow-y-auto p-3">
+      <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
+        <Card className="h-[calc(100vh-16rem)] min-h-[24rem] overflow-hidden p-0">
+          <div className="h-full space-y-1 overflow-y-auto p-3">
             {filtered.map((chat) => (
               <button
                 key={chat.id}
@@ -153,7 +153,7 @@ export default function Chats() {
           </div>
         </Card>
 
-        <Card className="h-[72vh] overflow-hidden p-0">
+        <Card className="h-[calc(100vh-16rem)] min-h-[24rem] overflow-hidden p-0">
           {!selected ? (
             <div className="grid h-full place-items-center text-ivory/40">
               <div className="text-center">
