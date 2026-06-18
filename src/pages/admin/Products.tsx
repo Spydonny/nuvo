@@ -3,7 +3,7 @@ import { Plus, Pencil, Trash2, X } from 'lucide-react'
 import Card from '../../components/admin/Card'
 import Button from '../../components/ui/Button'
 import Modal from '../../components/ui/Modal'
-import { fetchProducts, createProduct, updateProduct, deleteProduct } from '../../lib/api'
+import { fetchProducts, createProduct, updateProduct, deleteProduct, uploadProductImage } from '../../lib/api'
 import { formatKzt } from '../../lib/report'
 import type { Product, CreateProductPayload } from '../../types'
 
@@ -23,6 +23,7 @@ export default function Products() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [uploading, setUploading] = useState(false)
 
   const categories = useMemo(() => {
     const ids = Array.from(new Set(items.map((product) => product.category)))
@@ -58,6 +59,20 @@ export default function Products() {
     deleteProduct(id)
       .then(load)
       .catch(() => setError('Не удалось удалить товар.'))
+  }
+
+  const handleImageUpload = async (file: File | undefined) => {
+    if (!file || !editing) return
+    setUploading(true)
+    setError('')
+    try {
+      const { url } = await uploadProductImage(file)
+      setEditing({ ...editing, image: url })
+    } catch {
+      setError('Не удалось загрузить изображение.')
+    } finally {
+      setUploading(false)
+    }
   }
 
   const save = () => {
@@ -168,11 +183,35 @@ export default function Products() {
                 value={String(editing.price)}
                 onChange={(value) => setEditing({ ...editing, price: Number(value) })}
               />
-              <Input
-                label="URL изображения"
-                value={editing.image}
-                onChange={(value) => setEditing({ ...editing, image: value })}
-              />
+              <div>
+                <label className="mb-1.5 block text-xs uppercase tracking-wider text-ivory/45">
+                  Изображение
+                </label>
+                <div className="flex items-center gap-4">
+                  {editing.image ? (
+                    <img
+                      src={editing.image}
+                      alt=""
+                      className="h-20 w-20 shrink-0 rounded-xl object-cover ring-1 ring-ivory/15"
+                    />
+                  ) : (
+                    <div className="grid h-20 w-20 shrink-0 place-items-center rounded-xl bg-ivory/5 text-xs text-ivory/40">
+                      нет
+                    </div>
+                  )}
+                  <label className="cursor-pointer rounded-xl border border-ivory/15 bg-[#1d1411] px-4 py-2.5 text-sm text-ivory hover:border-gold">
+                    {uploading ? 'Загрузка…' : 'Загрузить файл'}
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      className="hidden"
+                      disabled={uploading}
+                      onChange={(event) => handleImageUpload(event.target.files?.[0])}
+                    />
+                  </label>
+                </div>
+                <p className="mt-1.5 text-xs text-ivory/35">JPEG, PNG, WebP или GIF, до 5 МБ.</p>
+              </div>
               <Input
                 label="Описание"
                 value={editing.description}

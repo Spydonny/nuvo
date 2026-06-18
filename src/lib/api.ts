@@ -111,6 +111,30 @@ export function deleteProduct(id: string) {
   return request<void>(`/products/${encodeURIComponent(id)}`, { method: 'DELETE' })
 }
 
+// Загрузка картинки товара в MongoDB. Возвращает URL вида /api/products/images/{id},
+// который сохраняется в поле product.image и используется напрямую в <img src>.
+export async function uploadProductImage(file: File): Promise<{ id: string; url: string }> {
+  const token = getToken()
+  const form = new FormData()
+  form.append('file', file)
+  const response = await fetch(`${API_URL}/products/images`, {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: form,
+  })
+  if (!response.ok) {
+    let message = `HTTP ${response.status}`
+    try {
+      const payload = await response.json()
+      message = payload.detail ?? payload.message ?? message
+    } catch {
+      /* ignore */
+    }
+    throw new ApiError(response.status, message)
+  }
+  return response.json()
+}
+
 export function fetchOrders() {
   return request<Order[]>('/orders')
 }
