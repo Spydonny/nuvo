@@ -7,9 +7,11 @@ import { fetchProducts, createProduct, updateProduct, deleteProduct, uploadProdu
 import { formatKzt } from '../../lib/report'
 import type { Product, CreateProductPayload } from '../../types'
 
+const CATEGORY_SUGGESTIONS = ['Клубника в шоколаде', 'Боксы', 'Подарочные корзины', 'Конфеты']
+
 const blank: CreateProductPayload = {
   name: '',
-  category: 'strawberry',
+  category: CATEGORY_SUGGESTIONS[0],
   price: 0,
   image: 'https://images.unsplash.com/photo-1582176604856-e824b4736522?auto=format&fit=crop&w=900&q=80',
   description: '',
@@ -26,8 +28,8 @@ export default function Products() {
   const [uploading, setUploading] = useState(false)
 
   const categories = useMemo(() => {
-    const ids = Array.from(new Set(items.map((product) => product.category)))
-    return ['strawberry', 'boxes', 'baskets', 'chocolate', ...ids]
+    const ids = items.map((product) => product.category)
+    return Array.from(new Set([...CATEGORY_SUGGESTIONS, ...ids]))
   }, [items])
 
   const load = () => {

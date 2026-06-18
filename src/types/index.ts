@@ -94,6 +94,9 @@ export interface SiteSettings {
   commerce: {
     delivery_info: string
     payment_info: string
+    // Режим, в котором WhatsApp-бот завершает заказ:
+    // 'auto' — бот сам принимает заказ в работу; 'manual' — ждёт подтверждения менеджера.
+    order_approval: 'auto' | 'manual'
   }
   bot_enabled: boolean
 }

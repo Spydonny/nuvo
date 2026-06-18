@@ -90,6 +90,22 @@ export default function Settings() {
           <div className="space-y-4">
             <TextArea label="Доставка" value={settings.commerce.delivery_info} onChange={(value) => updateCommerce('delivery_info', value)} />
             <TextArea label="Оплата" value={settings.commerce.payment_info} onChange={(value) => updateCommerce('payment_info', value)} />
+            <div>
+              <label className="mb-1.5 block text-xs uppercase tracking-wider text-ivory/45">
+                Приём заказов ботом
+              </label>
+              <select
+                value={settings.commerce.order_approval ?? 'auto'}
+                onChange={(event) => updateCommerce('order_approval', event.target.value)}
+                className="w-full rounded-xl border border-ivory/15 bg-[#1d1411] px-4 py-3 text-sm text-ivory outline-none focus:border-gold"
+              >
+                <option value="auto">Автоматически — бот принимает заказ сам</option>
+                <option value="manual">Вручную — заказ ждёт подтверждения менеджера</option>
+              </select>
+              <p className="mt-1.5 text-xs text-ivory/35">
+                В авто-режиме бот сразу берёт заказ в работу. Оплата — при получении.
+              </p>
+            </div>
             <label className="flex items-center gap-3 text-sm text-ivory/70">
               <input
                 type="checkbox"

@@ -26,7 +26,8 @@ export const defaultSettings: SiteSettings = {
   },
   commerce: {
     delivery_info: 'Доставка по Алматы в день заказа или в удобное для вас время.',
-    payment_info: 'Оплата наличными, картой или переводом при получении.',
+    payment_info: 'Оплата при получении — наличными или картой курьеру либо в пункте выдачи.',
+    order_approval: 'auto',
   },
   bot_enabled: true,
 }
