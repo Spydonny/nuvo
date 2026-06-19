@@ -44,10 +44,17 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     ...options.headers,
   }
 
+  const body =
+    options.body instanceof FormData
+      ? options.body
+      : options.body
+        ? JSON.stringify(options.body)
+        : undefined
+
   const response = await fetch(`${API_URL}${path}`, {
     method: options.method ?? 'GET',
     headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body,
   })
 
   if (!response.ok) {
